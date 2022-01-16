@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计网学习笔记-http协议 | Kristye</title><meta name="author" content="Kristye"><meta name="copyright" content="Kristye"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="http协议 HTTP（Hyper Text Transfer Protocol超文本传输协议）是一个基于TCP&#x2F;IP通信协议来传递数据的协议，传输的数据类型为HTML 文件,图片文件, 查询结果等。 浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求    http协议的特点 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、P">
+<meta property="og:type" content="website">
+<meta property="og:title" content="计网学习笔记-http协议">
+<meta property="og:url" content="https://hantron.github.io/%E5%BA%9F%E5%BC%83leetcode%E6%96%87%E7%AB%A0/network-page3-http%E5%8D%8F%E8%AE%AE.html">
+<meta property="og:site_name" content="Kristye">
+<meta property="og:description" content="http协议 HTTP（Hyper Text Transfer Protocol超文本传输协议）是一个基于TCP&#x2F;IP通信协议来传递数据的协议，传输的数据类型为HTML 文件,图片文件, 查询结果等。 浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求    http协议的特点 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hantron.github.io/img/network.jpg">
+<meta property="article:published_time" content="2021-07-16T08:45:00.000Z">
+<meta property="article:modified_time" content="2021-07-16T12:47:56.000Z">
+<meta property="article:author" content="Kristye">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hantron.github.io/img/network.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hantron.github.io/%E5%BA%9F%E5%BC%83leetcode%E6%96%87%E7%AB%A0/network-page3-http%E5%8D%8F%E8%AE%AE"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-07-16 20:47:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/yhq.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="not-index-bg" id="page-header" style="background-image: url(/img/top-img.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Kristye</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">计网学习笔记-http协议</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><h1 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h1><ol>
+<li>HTTP（Hyper Text Transfer Protocol超文本传输协议）是一个基于TCP/IP通信协议来传递数据的协议，传输的数据类型为HTML 文件,图片文件, 查询结果等。</li>
+<li>浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求</li>
+</ol>
+<div align="center"><img src="/%E5%BA%9F%E5%BC%83leetcode%E6%96%87%E7%AB%A0/network-page3-http%E5%8D%8F%E8%AE%AE.htm/img1.jpg"></div>
+
+<h1 id="http协议的特点"><a href="#http协议的特点" class="headerlink" title="http协议的特点"></a>http协议的特点</h1><ol>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST</li>
+<li>灵活：允许传输任意类型的数据对象</li>
+<li>无连接：限制每次连接只处理一个请求,服务器处理完请求，并收到客户的应答后，即断开连接，但是却不利于客户端与服务器保持会话连接，为了弥补这种不足，产生了两项记录http状态的技术，一个叫做Cookie,一个叫做Session。</li>
+<li>HTTP使用统一资源标识符（Uniform Resource Identifiers, URI）来传输数据和建立连接。<ul>
+<li>URI：Uniform Resource Identifier 统一资源标识符(表示具体资源）</li>
+<li>URL：Uniform Resource Location 统一资源定位符（定位具体资源）</li>
+</ul>
+</li>
+</ol>
+<h1 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h1><ol>
+<li>请求行：包括请求方法（GET/POST/…）、URL(请求路径)、协议/版本、状态码</li>
+</ol>
+<div align="center"><img src="/%E5%BA%9F%E5%BC%83leetcode%E6%96%87%E7%AB%A0/network-page3-http%E5%8D%8F%E8%AE%AE.htm/img2.jpg"></div>
+
+<ol start="2">
+<li>请求头(Request Header)</li>
+</ol>
+<div align="center"><img src="/%E5%BA%9F%E5%BC%83leetcode%E6%96%87%E7%AB%A0/network-page3-http%E5%8D%8F%E8%AE%AE.htm/img2.jpg"></div>
+
+<ol start="3">
+<li>请求正文</li>
+</ol>
+<h1 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h1><h2 id="常见的请求方法："><a href="#常见的请求方法：" class="headerlink" title="常见的请求方法："></a>常见的请求方法：</h2><ul>
+<li>GET:请求指定的页面信息，并返回实体主体。</li>
+<li>POST:向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。</li>
+<li>HEAD:类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头</li>
+<li>PUT:从客户端向服务器传送的数据取代指定的文档的内容。</li>
+<li>DELETE:请求服务器删除指定的页面。</li>
+</ul>
+<h2 id="post和get的区别"><a href="#post和get的区别" class="headerlink" title="post和get的区别"></a>post和get的区别</h2><ul>
+<li>都包含请求头请求行，post多了请求body。</li>
+<li>get多用来查询，请求参数放在url中，不会对服务器上的内容产生作用。post用来提交，如把账号密码放入body中。</li>
+<li>GET是直接添加到URL后面的，直接就可以在URL中看到内容，而POST是放在报文内部的，用户无法直接看到。</li>
+<li>GET提交的数据长度是有限制的，因为URL长度有限制，具体的长度限制视浏览器而定。而POST没有。</li>
+</ul>
+<h2 id="状态码（Status）"><a href="#状态码（Status）" class="headerlink" title="状态码（Status）"></a>状态码（Status）</h2><h3 id="状态码分类："><a href="#状态码分类：" class="headerlink" title="状态码分类："></a>状态码分类：</h3><pre><code>* 1XX- 信息型，服务器收到请求，需要请求者继续操作。
+* 2XX- 成功型，请求成功收到，理解并处理。
+* 3XX - 重定向，需要进一步的操作以完成请求。
+* 4XX - 客户端错误，请求包含语法错误或无法完成请求。
+* 5XX - 服务器错误，服务器在处理请求的过程中发生了错误。
+常见状态码：
+* 200 OK - 客户端请求成功
+* 301 - 资源（网页等）被永久转移到其它URL
+* 302 - 临时跳转
+* 400 Bad Request - 客户端请求有语法错误，不能被服务器所理解
+* 401 Unauthorized - 请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用
+* （有时候401意味着TOKEN过期，导致未授权）
+* 404 - 请求资源不存在，可能是输入了错误的URL
+* 500 - 服务器内部发生了不可预期的错误
+* 503 Server Unavailable - 服务器当前不能处理客户端的请求，一段时间后可能恢复正常。</code></pre>
+<h1 id="https协议"><a href="#https协议" class="headerlink" title="https协议"></a>https协议</h1></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/yhq.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Kristye</div><div class="author-info__description">深圳大学物联网工程大三 <br> 腾讯前端开发实习生 <br> 篮球爱好者，吃货一枚</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hantron"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/hantron" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:529283186@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Hope you would enjoy it</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/16/test-my-site/" title="test_my_site"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="test_my_site"/></a><div class="content"><a class="title" href="/2022/01/16/test-my-site/" title="test_my_site">test_my_site</a><time datetime="2022-01-16T10:34:43.000Z" title="发表于 2022-01-16 18:34:43">2022-01-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/28/jira-page1-jira%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" title="JIRA项目笔记1-JIRA介绍"><img src="/img/jira.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JIRA项目笔记1-JIRA介绍"/></a><div class="content"><a class="title" href="/2021/02/28/jira-page1-jira%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" title="JIRA项目笔记1-JIRA介绍">JIRA项目笔记1-JIRA介绍</a><time datetime="2021-02-27T23:02:00.000Z" title="发表于 2021-02-28 07:02:00">2021-02-28</time></div></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/JIRA/"><span class="card-category-list-name">JIRA</span><span class="card-category-list-count">1</span></a></li>
+            
+            </ul></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/02/"><span class="card-archive-list-date">二月 2021</span><span class="card-archive-list-count">1</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">2</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-16T11:21:36.606Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Kristye</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi!Wish you all the best!!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="false" async="async"></script></div></body></html>
